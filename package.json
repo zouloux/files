@@ -1,10 +1,18 @@
 {
   "name": "@zouloux/files",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Files is a NodeJS file management helper with a deadly simple API, with the power of glob and fs-extra.",
   "main": "files.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zouloux/files.git"
+  },
+  "homepage": "https://github.com/zouloux/files",
+  "bugs": {
+    "url": "https://github.com/zouloux/files/issues"
   },
   "keywords": [
     "files",
@@ -13,8 +21,12 @@
     "fs-extra",
     "simple",
     "api",
-    "helpe"
+    "helper"
   ],
+  "dependencies": {
+    "glob": "^7.1.1",
+    "fs-extra": "^2.0.0"
+  },
   "author": "Alexis Bouhet",
   "license": "MIT"
 }

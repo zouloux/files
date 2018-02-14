@@ -3,25 +3,31 @@
 
 declare export class Files
 {
-	/**
-	 * Enable or disable console log
-	 */
-	static setVerbose (value:boolean):void;
 
 	/**
-	 * Shortcut to target existing files from a glob.
+	 * Target existing files from a glob.
 	 */
 	static getFiles (pGlob):Files;
 
 	/**
-	 * Shortcut to target existing folders from a glob.
+	 * Target existing folders from a glob.
 	 */
 	static getFolders (pGlob):Files;
 
 	/**
-	 * Shortcut to target a non existing file or folder.
+	 * Target any file or folders.
+	 */
+	static any (pPath):Files;
+
+	/**
+	 * Target a non existing file or folder.
 	 */
 	static new (pPath):Files;
+
+	/**
+	 * Enable or disable console log
+	 */
+	static setVerbose (value:boolean):void;
 
 
 	/**
@@ -40,10 +46,11 @@ declare export class Files
 	 * Target files list or folder from a glog.
 	 * Can target files and folder if not filtered.
 	 * @param pGlob Glob pattern.
+	 * @param pNew If true, will target nothing.
 	 * @param pOnlyFiles If true, will only target existing files.
 	 * @param pOnlyFolders If true, will only target existing folders.
 	 */
-	constructor (pGlob:boolean, pOnlyFiles?:boolean, pOnlyFolders?:boolean);
+	constructor (pGlob, pNew?:boolean, pOnlyFiles?:boolean, pOnlyFolders?:boolean)
 
 
 	/**
@@ -63,32 +70,47 @@ declare export class Files
 	exists ():boolean;
 
 	/**
-	 * Get all files or folders.
+	 * Browse through all targeted files or folders from glob.
 	 * @param pHandler First argument will be the file or folder path
 	 */
-	all( pHandler : (file:string) => void ):string[];
+	all ( pHandler : (file:string) => void ):string[];
 
 	/**
 	 * Delete all targeted files or folders.
 	 * No warning.
+	 * @return {number} Total removed files.
 	 */
-	delete ();
+	delete ():number
 
 	/**
-	 * Move all targeted files or folders inside a directory
-	 * @param pDest Directory path where all files / folders will be moved into. No glob.
+	 * Delete all targeted files or folders.
+	 * No warning.
+	 * @return {number} Total removed files.
 	 */
-	moveTo (pDest:string);
+	remove ():number
 
 	/**
-	 * Copy all targeted files or folders inside a directory
-	 * @param pDest Directory path where all files / folders will be copied into. No glob.
+	 * Move all targeted files or folders inside a directory.
+	 * Add a trailing slash to force directory creation.
+	 * Files list will be updated with new moved file paths.
+	 * @param pDestination Directory path where all files / folders will be moved into. No glob.
+	 * @return {number} Total moved files.
 	 */
-	copyTo (pDest:string);
+	moveTo (pDestination:string):number
+
+	/**
+	 * Copy all targeted files or folders inside a directory.
+	 * Add a trailing slash to force directory creation.
+	 * Files list will stay the same after using this method.
+	 * @param pDestination Directory path where all files / folders will be copied into. No glob.
+	 * @return {number} Total copied files.
+	 */
+	copyTo (pDestination:string):number
 
 	/**
 	 * Read file content.
 	 * Only work if glob is pointing to an existing file.
+	 * Returns null if the file is not found.
 	 * @param pEncoding default is utf-8
 	 * @returns {Buffer}
 	 */
@@ -101,6 +123,27 @@ declare export class Files
 	 * @param pEncoding default is utf-8
 	 */
 	write (pContent = '', pEncoding = 'utf-8');
+
+	/**
+	 * Add content to an existing file.
+	 * Will create file if it does not exists
+	 * @param pContent Content to append
+	 * @param pNewLine If true, will create a new line.
+	 * @param pEncoding default is utf-8
+	 */
+	append (pContent = '', pNewLine = true, pEncoding = 'utf-8')
+
+	/**
+	 * Create parent folders if they do not exists.
+	 * Will use glob if there is no targeted files.
+	 */
+	createFolders ():void
+
+	/**
+	 * Create parent folders if they do not exists.
+	 * Will use glob if there is no targeted files.
+	 */
+	ensureFolders ():void
 
 	/**
 	 * Update a file with an handler.
