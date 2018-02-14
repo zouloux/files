@@ -3,15 +3,23 @@
 Files is a NodeJS file management helper with a deadly simple API, with the power of [glob](https://github.com/isaacs/node-glob) and [fs-extra](https://github.com/jprichardson/node-fs-extra).
 Used in [Solidify](https://github.com/solid-js/) framework to handle files easily inside NodeJS.
 
+
 # Philosophy
 
 This package is meant to do powerful files operations with a simple API, inside NodeJS applications.
 All methods will not throw anything if there is something wrong, so it will not break your running server.
-Not targeted files are just ignored, the same way JQuery target DOM nodes.
+
+Targeted files which does not exists are just ignored, the same way JQuery target DOM nodes.
+
+
+# Typescript
+
 By default, console logs are enabled to show you what this package does.
 A [Typescript definition](https://github.com/zouloux/files/blob/master/files.d.ts) file is along the main Javasript file.
 It's all automatic if you use Typescript.
 
+
+# Colors
 
 If you install the [colors npm package](https://github.com/marak/colors.js/), you'll have nice logs.
 Colors is not a dependency so the bundle stays light if you don't need colors.
@@ -177,9 +185,9 @@ TODO : Other examples.
 
 
 
-### Issues with API
+# Common issues with API
 
-##### Single files operations
+### Single files operations
 
 You will face problems if you try to do single files operation on multiple targeted files.
 
