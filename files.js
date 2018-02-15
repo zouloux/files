@@ -179,14 +179,14 @@ class Files
 	 */
 	delete ()
 	{
-		colorLog(`Files.delete ${this.glob} ...`, 1);
+		colorLog(`Files.delete ${this.glob} ...`, 0);
 
 		// Browse files or folders
 		this.files.map( file =>
 		{
 			// Remove
 			fse.removeSync( file );
-			colorLog(`	Deleted ${file}`, 0);
+			colorLog(`	Deleted ${file}`, 1);
 		});
 
 		// Return total deleted files and remove targeted files list
