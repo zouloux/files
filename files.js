@@ -9,7 +9,7 @@ let verbose = true;
 
 // If npm color module is installed
 // @see : https://github.com/marak/colors.js/
-const hasColorModule = ('yellow' in '' && 'grey' in '');
+const hasColorModule = ('yellow' in String.prototype);
 
 // Color code by indexes
 const colorCodeByLevels = ['yellow', 'grey'];
@@ -52,7 +52,7 @@ const targetDirectoryWithTrailingSlash = (pDestination, pFilePath) =>
 		(pDestination.lastIndexOf('/') === pDestination.length - 1)
 
 		// We compute path by adding the file name inside the destination directory
-		? path.join(pDestination, path.basename( file ))
+		? path.join(pDestination, path.basename( pFilePath ))
 
 		// Otherwise, we just return the destination
 		: pDestination
