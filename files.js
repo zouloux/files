@@ -82,7 +82,7 @@ class Files
 	 */
 	static getFolders (pGlob)
 	{
-		return new Files(pGlob, false, true);
+		return new Files(pGlob, false, false, true);
 	}
 
 	/**
