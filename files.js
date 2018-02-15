@@ -276,7 +276,7 @@ class Files
 	{
 		// Read file from disk and return null if file does not exists
 		return (
-			fs.exists( this.glob )
+			fs.existsSync( this.glob )
 			? fs.readFileSync( this.glob, { encoding: pEncoding } )
 			: null
 		)
@@ -312,7 +312,7 @@ class Files
 		// Prepend content by a new line
 		// Do not do it if this is the first line
 		const before = (
-			!fs.exists( this.glob ) || !pNewLine ? '' : "\n"
+			!fs.existsSync( this.glob ) || !pNewLine ? '' : "\n"
 		);
 
 		// Append content to the file
