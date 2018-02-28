@@ -1,7 +1,7 @@
 
 
 
-declare export class Files
+declare class Files
 {
 
 	/**
@@ -114,7 +114,7 @@ declare export class Files
 	 * @param pEncoding default is utf-8
 	 * @returns {Buffer}
 	 */
-	read (pEncoding = 'utf-8');
+	read (pEncoding);
 
 	/**
 	 * Write file content.
@@ -122,7 +122,14 @@ declare export class Files
 	 * @param pContent Content of the file to write, as a string
 	 * @param pEncoding default is utf-8
 	 */
-	write (pContent = '', pEncoding = 'utf-8');
+	write (pContent, pEncoding)
+	
+	/**
+	 * Write file content as JSON.
+	 * @param pContent Javascript object to write.
+	 * @param pSpaces Spaces size. Null to uglify.
+	 */
+	writeJSON ( pContent, pSpaces )
 
 	/**
 	 * Add content to an existing file.
@@ -131,7 +138,7 @@ declare export class Files
 	 * @param pNewLine If true, will create a new line.
 	 * @param pEncoding default is utf-8
 	 */
-	append (pContent = '', pNewLine = true, pEncoding = 'utf-8')
+	append (pContent, pNewLine, pEncoding)
 
 	/**
 	 * Create parent folders if they do not exists.
@@ -158,5 +165,5 @@ declare export class Files
 	 * @param pHandler Will have JSON content as first argument. Return new JSON content to be written.
 	 * @param pSpaces Spaces size. Null to uglify.
 	 */
-	alterJSON ( pHandler, pSpaces = 2 );
+	alterJSON ( pHandler, pSpaces );
 }

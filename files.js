@@ -298,6 +298,22 @@ class Files
 	}
 
 	/**
+	 * Write file content as JSON.
+	 * @param pContent Javascript object to write.
+	 * @param pSpaces Spaces size. Null to uglify.
+	 */
+	writeJSON ( pContent, pSpaces = 2  )
+	{
+		this.write(
+			JSON.stringify(
+				pContent,
+				null,
+				pSpaces
+			)
+		);
+	}
+
+	/**
 	 * Add content to an existing file.
 	 * Will create file if it does not exists
 	 * @param pContent Content to append
@@ -371,16 +387,16 @@ class Files
 	 */
 	alterJSON ( pHandler, pSpaces = 2 )
 	{
-		this.write(
-			JSON.stringify(
-				pHandler(
-					JSON.parse(
-						this.read().toString()
-					)
-				),
-				null,
-				pSpaces
-			)
+		const content = this.read();
+		this.writeJSON(
+			pHandler(
+				content == null
+				? {}
+				: JSON.parse(
+					this.read().toString()
+				)
+			),
+			2
 		);
 	}
 }
