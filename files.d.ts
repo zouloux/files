@@ -3,6 +3,7 @@
 
 declare class Files
 {
+	// ------------------------------------------------------------------------- STATICS
 
 	/**
 	 * Target existing files from a glob.
@@ -28,7 +29,10 @@ declare class Files
 	 * Enable or disable console log
 	 */
 	static setVerbose (value:boolean):void;
+	static getVerbose ():boolean;
 
+
+	// ------------------------------------------------------------------------- PROPERTIES
 
 	/**
 	 * Glob pattern targeting files or folders.
@@ -41,6 +45,8 @@ declare class Files
 	 */
 	files	:string[];
 
+
+	// ------------------------------------------------------------------------- INIT
 
 	/**
 	 * Target files list or folder from a glog.
@@ -63,6 +69,9 @@ declare class Files
 	 */
 	onlyExistingFolders ();
 
+
+	// ------------------------------------------------------------------------- FILES
+
 	/**
 	 * Check if this glob is targeting existing files or folders.
 	 * @returns {boolean}
@@ -74,6 +83,9 @@ declare class Files
 	 * @param pHandler First argument will be the file or folder path
 	 */
 	all ( pHandler : (file:string) => void ):string[];
+
+
+	// ------------------------------------------------------------------------- DELETE AND REMOVE
 
 	/**
 	 * Delete all targeted files or folders.
@@ -88,6 +100,24 @@ declare class Files
 	 * @return {number} Total removed files.
 	 */
 	remove ():number
+
+
+	// ------------------------------------------------------------------------- FOLDERS AND DIRECTORIES
+
+	/**
+	 * Create parent folders if they do not exists.
+	 * Will use glob if there is no targeted files.
+	 */
+	createFolders ():void
+
+	/**
+	 * Create parent folders if they do not exists.
+	 * Will use glob if there is no targeted files.
+	 */
+	ensureFolders ():void
+
+
+	// ------------------------------------------------------------------------- COPY AND MOVE
 
 	/**
 	 * Move all targeted files or folders inside a directory.
@@ -107,6 +137,9 @@ declare class Files
 	 */
 	copyTo (pDestination:string):number
 
+
+	// ------------------------------------------------------------------------- STRING FILE CONTENT
+
 	/**
 	 * Read file content.
 	 * Only work if glob is pointing to an existing file.
@@ -114,7 +147,7 @@ declare class Files
 	 * @param pEncoding default is utf-8
 	 * @returns {Buffer}
 	 */
-	read (pEncoding);
+	read (pEncoding):string
 
 	/**
 	 * Write file content.
@@ -123,13 +156,14 @@ declare class Files
 	 * @param pEncoding default is utf-8
 	 */
 	write (pContent, pEncoding)
-	
+
 	/**
-	 * Write file content as JSON.
-	 * @param pContent Javascript object to write.
-	 * @param pSpaces Spaces size. Null to uglify.
+	 * Update a file with an handler.
+	 * Will read file content and pass it as first argument of the handler.
+	 * Will write file content from handler return.
+	 * @param pHandler Will have file content as first argument. Return new file content to be written.
 	 */
-	writeJSON ( pContent, pSpaces )
+	alter ( pHandler )
 
 	/**
 	 * Add content to an existing file.
@@ -140,30 +174,26 @@ declare class Files
 	 */
 	append (pContent, pNewLine, pEncoding)
 
+
+	// ------------------------------------------------------------------------- JSON FILE CONTENT
+	
 	/**
-	 * Create parent folders if they do not exists.
-	 * Will use glob if there is no targeted files.
+	 * Read JSON file content.
+	 * Will return null if file does not exists.
 	 */
-	createFolders ():void
+	readJSON ():string
 
 	/**
-	 * Create parent folders if they do not exists.
-	 * Will use glob if there is no targeted files.
+	 * Write file content as JSON.
+	 * @param pContent Javascript object to write.
+	 * @param pSpaces Spaces size. Null to uglify.
 	 */
-	ensureFolders ():void
-
-	/**
-	 * Update a file with an handler.
-	 * Will read file content and pass it as first argument of the handler.
-	 * Will write file content from handler return.
-	 * @param pHandler Will have file content as first argument. Return new file content to be written.
-	 */
-	alter ( pHandler );
+	writeJSON ( pContent:any, pSpaces:number|null )
 
 	/**
 	 * Update a JSON file with an handler.
 	 * @param pHandler Will have JSON content as first argument. Return new JSON content to be written.
 	 * @param pSpaces Spaces size. Null to uglify.
 	 */
-	alterJSON ( pHandler, pSpaces );
+	alterJSON ( pHandler, pSpaces:number|null );
 }

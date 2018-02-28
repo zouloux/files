@@ -69,6 +69,8 @@ const targetDirectoryWithTrailingSlash = (pDestination, pFilePath) =>
  */
 class Files
 {
+	// ------------------------------------------------------------------------- STATICS
+
 	/**
 	 * Target existing files from a glob.
 	 */
@@ -108,7 +110,10 @@ class Files
 	{
 		verbose = pVerbose;
 	}
+	static getVerbose () { return verbose; }
 
+
+	// ------------------------------------------------------------------------- INIT
 
 	/**
 	 * Target files list or folder from a glog.
@@ -154,6 +159,8 @@ class Files
 	}
 
 
+	// ------------------------------------------------------------------------- FILES
+
 	/**
 	 * Check if this glob is targeting existing files or folders.
 	 * @returns {boolean}
@@ -171,6 +178,9 @@ class Files
 	{
 		return this.files.map( pHandler );
 	}
+
+
+	// ------------------------------------------------------------------------- DELETE AND REMOVE
 
 	/**
 	 * Delete all targeted files or folders.
@@ -204,6 +214,42 @@ class Files
 	{
 		return this.delete();
 	}
+
+
+	// ------------------------------------------------------------------------- FOLDERS AND DIRECTORIES
+
+	/**
+	 * Create parent folders if they do not exists.
+	 * Will use glob if there is no targeted files.
+	 */
+	createFolders ()
+	{
+		// If there is no targeted files
+		if (this.files.length === 0)
+		{
+			// Use glob so we can ensure dir for new files
+			fse.ensureDirSync( this.glob );
+		}
+
+		// But if there is targeted files
+		else
+		{
+			// Use files list to ensure dir because glob is not a real path
+			this.files.map( file => fse.ensureDirSync( file ) );
+		}
+	}
+
+	/**
+	 * Create parent folders if they do not exists.
+	 * Will use glob if there is no targeted files.
+	 */
+	ensureFolders ()
+	{
+		this.createFolders();
+	}
+
+
+	// ------------------------------------------------------------------------- COPY AND MOVE
 
 	/**
 	 * Move all targeted files or folders inside a directory.
@@ -265,6 +311,9 @@ class Files
 		return this.files.length;
 	}
 
+
+	// ------------------------------------------------------------------------- STRING FILE CONTENT
+
 	/**
 	 * Read file content.
 	 * Only work if glob is pointing to an existing file.
@@ -298,17 +347,16 @@ class Files
 	}
 
 	/**
-	 * Write file content as JSON.
-	 * @param pContent Javascript object to write.
-	 * @param pSpaces Spaces size. Null to uglify.
+	 * Update a file with an handler.
+	 * Will read file content and pass it as first argument of the handler.
+	 * Will write file content from handler return.
+	 * @param pHandler Will have file content as first argument. Return new file content to be written.
 	 */
-	writeJSON ( pContent, pSpaces = 2  )
+	alter ( pHandler )
 	{
 		this.write(
-			JSON.stringify(
-				pContent,
-				null,
-				pSpaces
+			pHandler(
+				this.read()
 			)
 		);
 	}
@@ -335,47 +383,35 @@ class Files
 		fs.appendFileSync( this.glob, before + pContent, { encoding: pEncoding } );
 	}
 
-	/**
-	 * Create parent folders if they do not exists.
-	 * Will use glob if there is no targeted files.
-	 */
-	createFolders ()
-	{
-		// If there is no targeted files
-		if (this.files.length === 0)
-		{
-			// Use glob so we can ensure dir for new files
-			fse.ensureDirSync( this.glob );
-		}
 
-		// But if there is targeted files
-		else
-		{
-			// Use files list to ensure dir because glob is not a real path
-			this.files.map( file => fse.ensureDirSync( file ) );
-		}
+	// ------------------------------------------------------------------------- JSON FILE CONTENT
+
+	/**
+	 * Read JSON file content.
+	 * Will return null if file does not exists.
+	 */
+	readJSON ()
+	{
+		const content = this.read();
+		return (
+			content == null
+			? null
+			: JSON.parse( content.toString() )
+		);
 	}
 
 	/**
-	 * Create parent folders if they do not exists.
-	 * Will use glob if there is no targeted files.
+	 * Write file content as JSON.
+	 * @param pContent Javascript object to write.
+	 * @param pSpaces Spaces size. Null to uglify.
 	 */
-	ensureFolders ()
-	{
-		this.createFolders();
-	}
-
-	/**
-	 * Update a file with an handler.
-	 * Will read file content and pass it as first argument of the handler.
-	 * Will write file content from handler return.
-	 * @param pHandler Will have file content as first argument. Return new file content to be written.
-	 */
-	alter ( pHandler )
+	writeJSON ( pContent, pSpaces = 2  )
 	{
 		this.write(
-			pHandler(
-				this.read()
+			JSON.stringify(
+				pContent,
+				null,
+				pSpaces
 			)
 		);
 	}
@@ -387,16 +423,11 @@ class Files
 	 */
 	alterJSON ( pHandler, pSpaces = 2 )
 	{
-		const content = this.read();
 		this.writeJSON(
 			pHandler(
-				content == null
-				? {}
-				: JSON.parse(
-					this.read().toString()
-				)
+				this.readJSON()
 			),
-			2
+			pSpaces
 		);
 	}
 }

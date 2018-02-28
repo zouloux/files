@@ -1,8 +1,9 @@
 {
   "name": "@zouloux/files",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Files is a NodeJS file management helper with a deadly simple API, with the power of glob and fs-extra.",
   "main": "files.js",
+  "types" : "files.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
