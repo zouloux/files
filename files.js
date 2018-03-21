@@ -143,7 +143,7 @@ class Files
 	{
 		// Filter files or folder
 		this.files = this.files.filter(
-			file => fs.lstatSync( file ).isFile()
+			file => fs.existsSync( file ) && fs.lstatSync( file ).isFile()
 		);
 	}
 
@@ -154,7 +154,7 @@ class Files
 	{
 		// Filter files or folder
 		this.files = this.files.filter(
-			file => fs.lstatSync( file ).isDirectory()
+			file => fs.existsSync( file ) && fs.lstatSync( file ).isDirectory()
 		);
 	}
 
