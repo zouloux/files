@@ -125,7 +125,7 @@ declare module '@zouloux/files'
 		 * @param pDestination Directory path where all files / folders will be moved into. No glob.
 		 * @return {number} Total moved files.
 		 */
-		moveTo (pDestination:string):number
+		moveTo ( pDestination:string ):number
 
 		/**
 		 * Copy all targeted files or folders inside a directory.
@@ -134,7 +134,7 @@ declare module '@zouloux/files'
 		 * @param pDestination Directory path where all files / folders will be copied into. No glob.
 		 * @return {number} Total copied files.
 		 */
-		copyTo (pDestination:string):number
+		copyTo ( pDestination:string ):number
 
 
 		// ------------------------------------------------------------------------- STRING FILE CONTENT
@@ -143,35 +143,35 @@ declare module '@zouloux/files'
 		 * Read file content.
 		 * Only work if glob is pointing to an existing file.
 		 * Returns null if the file is not found.
-		 * @param pEncoding default is utf-8
-		 * @returns {Buffer}
+	 	 * @param pEncoding default is null
 		 */
-		read (pEncoding?:string):string
+		read ( pEncoding?:string ):string
 
 		/**
 		 * Write file content.
 		 * Will use glob to create a unique file.
 		 * @param pContent Content of the file to write, as a string
-		 * @param pEncoding default is utf-8
+	 	 * @param pEncoding default is null
 		 */
-		write (pContent, pEncoding?:string)
+		write ( pContent, pEncoding?:string )
 
 		/**
 		 * Update a file with an handler.
 		 * Will read file content and pass it as first argument of the handler.
 		 * Will write file content from handler return.
 		 * @param pHandler Will have file content as first argument. Return new file content to be written.
+	 	 * @param pEncoding default is null
 		 */
-		alter ( pHandler )
+		alter ( pHandler, pEncoding?:string )
 
 		/**
 		 * Add content to an existing file.
 		 * Will create file if it does not exists
 		 * @param pContent Content to append
 		 * @param pNewLine If true, will create a new line.
-		 * @param pEncoding default is utf-8
+	 	 * @param pEncoding default is null
 		 */
-		append (pContent, pNewLine?:boolean, pEncoding?:string)
+		append ( pContent, pNewLine?:boolean, pEncoding?:string )
 
 
 		// ------------------------------------------------------------------------- JSON FILE CONTENT
@@ -179,21 +179,24 @@ declare module '@zouloux/files'
 		/**
 		 * Read JSON file content.
 		 * Will return null if file does not exists.
+	 	 * @param pEncoding default is null
 		 */
-		readJSON ():string
+		readJSON ( pEncoding?:string ):string
 
 		/**
 		 * Write file content as JSON.
 		 * @param pContent Javascript object to write.
 		 * @param pSpaces Spaces size. Null to uglify.
+	 	 * @param pEncoding default is null
 		 */
-		writeJSON ( pContent:any, pSpaces?:number|null )
+		writeJSON ( pContent:any, pSpaces?:number|null, pEncoding?:string )
 
 		/**
 		 * Update a JSON file with an handler.
 		 * @param pHandler Will have JSON content as first argument. Return new JSON content to be written.
 		 * @param pSpaces Spaces size. Null to uglify.
+	 	 * @param pEncoding default is null
 		 */
-		alterJSON ( pHandler, pSpaces?:number|null );
+		alterJSON ( pHandler, pSpaces?:number|null, pEncoding?:string );
 	}
 }

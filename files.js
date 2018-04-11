@@ -318,15 +318,18 @@ class Files
 	 * Read file content.
 	 * Only work if glob is pointing to an existing file.
 	 * Returns null if the file is not found.
-	 * @param pEncoding default is utf-8
+	 * @param pEncoding default is null.
 	 * @returns {Buffer}
 	 */
-	read (pEncoding = 'utf-8')
+	read ( pEncoding = null )
 	{
 		// Read file from disk and return null if file does not exists
 		return (
 			fs.existsSync( this.glob )
-			? fs.readFileSync( this.glob, { encoding: pEncoding } )
+			? fs.readFileSync(
+				this.glob,
+				pEncoding == null ? null : { encoding: pEncoding }
+			)
 			: null
 		)
 	}
@@ -335,15 +338,18 @@ class Files
 	 * Write file content.
 	 * Will use glob to create the file.
 	 * @param pContent Content of the file to write, as a string
-	 * @param pEncoding default is utf-8
+	 * @param pEncoding default is null
 	 */
-	write (pContent = '', pEncoding = 'utf-8')
+	write ( pContent = '', pEncoding = null )
 	{
 		// Create parent folders recursively
 		fse.ensureDirSync( path.dirname( this.glob ) );
 
 		// Write file to disk
-		fs.writeFileSync( this.glob, pContent, { encoding: pEncoding } );
+		fs.writeFileSync(
+			this.glob, pContent,
+			pEncoding == null ? null : { encoding: pEncoding }
+		);
 	}
 
 	/**
@@ -351,13 +357,15 @@ class Files
 	 * Will read file content and pass it as first argument of the handler.
 	 * Will write file content from handler return.
 	 * @param pHandler Will have file content as first argument. Return new file content to be written.
+	 * @param pEncoding default is null
 	 */
-	alter ( pHandler )
+	alter ( pHandler, pEncoding = null )
 	{
 		this.write(
 			pHandler(
 				this.read()
-			)
+			),
+			pEncoding
 		);
 	}
 
@@ -366,9 +374,9 @@ class Files
 	 * Will create file if it does not exists
 	 * @param pContent Content to append
 	 * @param pNewLine If true, will create a new line.
-	 * @param pEncoding default is utf-8
+	 * @param pEncoding default is null
 	 */
-	append (pContent = '', pNewLine = true, pEncoding = 'utf-8')
+	append ( pContent = '', pNewLine = true, pEncoding = null )
 	{
 		// Create parent folders recursively
 		fse.ensureDirSync( path.dirname( this.glob ) );
@@ -389,10 +397,11 @@ class Files
 	/**
 	 * Read JSON file content.
 	 * Will return null if file does not exists.
+	 * @param pEncoding default is null
 	 */
-	readJSON ()
+	readJSON ( pEncoding = null )
 	{
-		const content = this.read();
+		const content = this.read( pEncoding );
 		return (
 			content == null
 			? null
@@ -404,15 +413,17 @@ class Files
 	 * Write file content as JSON.
 	 * @param pContent Javascript object to write.
 	 * @param pSpaces Spaces size. Null to uglify.
+	 * @param pEncoding default is null
 	 */
-	writeJSON ( pContent, pSpaces = 2  )
+	writeJSON ( pContent, pSpaces = 2, pEncoding = null )
 	{
 		this.write(
 			JSON.stringify(
 				pContent,
 				null,
 				pSpaces
-			)
+			),
+			pEncoding
 		);
 	}
 
@@ -420,14 +431,16 @@ class Files
 	 * Update a JSON file with an handler.
 	 * @param pHandler Will have JSON content as first argument. Return new JSON content to be written.
 	 * @param pSpaces Spaces size. Null to uglify.
+	 * @param pEncoding default is null
 	 */
-	alterJSON ( pHandler, pSpaces = 2 )
+	alterJSON ( pHandler, pSpaces = 2, pEncoding = null  )
 	{
 		this.writeJSON(
 			pHandler(
 				this.readJSON()
 			),
-			pSpaces
+			pSpaces,
+			pEncoding
 		);
 	}
 }
