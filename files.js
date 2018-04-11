@@ -325,11 +325,17 @@ class Files
 	{
 		// Read file from disk and return null if file does not exists
 		return (
+			// Read the file and convert to string if the file exists
 			fs.existsSync( this.glob )
-			? fs.readFileSync(
-				this.glob,
-				pEncoding == null ? null : { encoding: pEncoding }
+			? (
+				fs.readFileSync(
+					this.glob,
+					pEncoding == null ? null : { encoding: pEncoding }
+
+				// Convert the Buffer to string
+				).toString()
 			)
+			// File does not exists
 			: null
 		)
 	}
