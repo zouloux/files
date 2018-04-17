@@ -449,6 +449,65 @@ class Files
 			pEncoding
 		);
 	}
+
+
+	// ------------------------------------------------------------------------- FILE STATS
+
+	/**
+	 * Get files stats.
+	 * Only works when targetting one file, otherwise will return null.
+	 * @returns {any}
+	 */
+	getFileStats ()
+	{
+		// Only works
+		if ( this.files.length != 1 ) return null;
+
+		// Store file stats in cache to avoir reading it several times
+		if ( this._fileStats == null )
+		{
+			this._fileStats = fs.statSync( this.files[0] );
+		}
+
+		// Return file stats
+		return this._fileStats;
+	}
+
+	/**
+	 * Get last modified timestamp.
+	 * Only works when targetting one file, otherwise will return null.
+	 * @returns {number|null}
+	 */
+	getLastModified ()
+	{
+		// Get file stats with cache
+		const fileStats = this.getFileStats();
+
+		return (
+			// File does not exists
+			( fileStats == null ) ? null
+			// Get timestamp and not date
+			: fileStats.mtime.getTime()
+		);
+	}
+
+	/**
+	 * Get file size as bytes.
+	 * Only works when targetting one file, otherwise will return null.
+	 * @returns {number|null}
+	 */
+	getSize ()
+	{
+		// Get file stats with cache
+		const fileStats = this.getFileStats();
+
+		return (
+			// File does not exists
+			( fileStats == null ) ? null
+			// Get file size in bytes
+			: fileStats.size
+		);
+	}
 }
 
 /**

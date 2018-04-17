@@ -7,28 +7,28 @@ declare module '@zouloux/files'
 		/**
 		 * Target existing files from a glob.
 		 */
-		static getFiles (pGlob):Files;
+		static getFiles (pGlob):Files
 
 		/**
 		 * Target existing folders from a glob.
 		 */
-		static getFolders (pGlob):Files;
+		static getFolders (pGlob):Files
 
 		/**
 		 * Target any file or folders.
 		 */
-		static any (pPath):Files;
+		static any (pPath):Files
 
 		/**
 		 * Target a non existing file or folder.
 		 */
-		static new (pPath):Files;
+		static new (pPath):Files
 
 		/**
 		 * Enable or disable console log
 		 */
-		static setVerbose (value:boolean):void;
-		static getVerbose ():boolean;
+		static setVerbose (value:boolean):void
+		static getVerbose ():boolean
 
 
 		// ------------------------------------------------------------------------- PROPERTIES
@@ -36,13 +36,18 @@ declare module '@zouloux/files'
 		/**
 		 * Glob pattern targeting files or folders.
 		 */
-		glob	:string;
+		glob		:string;
 
 		/**
 		 * Existing files from glob.
 		 * Can be empty if you create a new file or folder.
 		 */
-		files	:string[];
+		files		:string[];
+
+		/**
+		 * Current file stats in cache
+		 */
+		protected _fileStats:any;
 
 
 		// ------------------------------------------------------------------------- INIT
@@ -73,7 +78,6 @@ declare module '@zouloux/files'
 
 		/**
 		 * Check if this glob is targeting existing files or folders.
-		 * @returns {boolean}
 		 */
 		exists ():boolean;
 
@@ -197,6 +201,27 @@ declare module '@zouloux/files'
 		 * @param pSpaces Spaces size. Null to uglify.
 	 	 * @param pEncoding default is null
 		 */
-		alterJSON ( pHandler, pSpaces?:number|null, pEncoding?:string );
+		alterJSON ( pHandler, pSpaces?:number|null, pEncoding?:string )
+
+
+		// ------------------------------------------------------------------------- FILE STATS
+
+		/**
+		 * Get files stats.
+		 * Only works when targetting one file, otherwise will return null.
+		 */
+		getFileStats ():any
+
+		/**
+		 * Get last modified timestamp.
+		 * Only works when targetting one file, otherwise will return null.
+		 */
+		getLastModified ():number|null
+
+		/**
+		 * Get file size as bytes.
+		 * Only works when targetting one file, otherwise will return null.
+		 */
+		getSize ():number|null
 	}
 }
