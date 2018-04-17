@@ -1,6 +1,6 @@
 {
   "name": "@zouloux/files",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "description": "Files is a NodeJS file management helper with a deadly simple API, with the power of glob and fs-extra.",
   "main": "files.js",
   "types" : "files.d.ts",

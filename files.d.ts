@@ -147,9 +147,10 @@ declare module '@zouloux/files'
 		 * Read file content.
 		 * Only work if glob is pointing to an existing file.
 		 * Returns null if the file is not found.
-	 	 * @param pEncoding default is null
+		 * @param pEncoding default is null.
+		 * @param pKeepBuffer Return a Buffer or convert as string. Default is true and returns a string.
 		 */
-		read ( pEncoding?:string ):string
+		read ( pEncoding = null, pKeepBuffer = false ):Buffer|string;
 
 		/**
 		 * Write file content.

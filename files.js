@@ -319,25 +319,23 @@ class Files
 	 * Only work if glob is pointing to an existing file.
 	 * Returns null if the file is not found.
 	 * @param pEncoding default is null.
-	 * @returns {Buffer}
+	 * @param pKeepBuffer Return a Buffer or convert as string. Default is true and returns a string.
+	 * @returns {Buffer|string}
 	 */
-	read ( pEncoding = null )
+	read ( pEncoding = null, pKeepBuffer = false )
 	{
-		// Read file from disk and return null if file does not exists
-		return (
-			// Read the file and convert to string if the file exists
-			fs.existsSync( this.glob )
-			? (
-				fs.readFileSync(
-					this.glob,
-					pEncoding == null ? null : { encoding: pEncoding }
+		// Return null if file does not exists
+		if ( !fs.existsSync( this.glob ) ) return null;
 
-				// Convert the Buffer to string
-				).toString()
-			)
-			// File does not exists
-			: null
-		)
+		// Read file buffer
+		const fileBuffer = fs.readFileSync(
+			this.glob,
+			// Default encoding
+			pEncoding == null ? null : { encoding: pEncoding }
+		);
+
+		// Convert the Buffer to string or keep buffer
+		return ( pKeepBuffer ? fileBuffer : fileBuffer.toString() );
 	}
 
 	/**
