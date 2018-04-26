@@ -150,7 +150,7 @@ declare module '@zouloux/files'
 		 * @param pEncoding default is null.
 		 * @param pKeepBuffer Return a Buffer or convert as string. Default is true and returns a string.
 		 */
-		read ( pEncoding = null, pKeepBuffer = false ):Buffer|string;
+		read ( pEncoding, pKeepBuffer ):Buffer|string;
 
 		/**
 		 * Write file content.
