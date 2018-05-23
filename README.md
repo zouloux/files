@@ -154,10 +154,10 @@ Files.getFiles('file.txt').alter( fileContent =>
 ```javascript
 Files.getFiles('package.json').alterJSON( packageObject =>
 {
-    packageObject.version = '0.1.0';
-    packageObject.name = 'project name';
-    packageObject.author = 'author ';
-    return packageObject;
+	packageObject.version = '0.1.0';
+	packageObject.name = 'project-name';
+	packageObject.author = 'author';
+	return packageObject;
 });
 ```
 

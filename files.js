@@ -23,15 +23,35 @@ const colorCodeByLevels = ['yellow', 'grey'];
  */
 const colorLog = (pLogContent, pLogLevel) =>
 {
+	if (typeof verbose === 'function')
+	{
+		verbose(pLogContent, pLogLevel);
+		return;
+	}
+
 	// Enable log only if verbose is enabled
-	verbose && console.log(
+	(
+		// Enabled by a boolean value
+		(typeof verbose === 'boolean' && verbose)
 
-		// If we have color module, show with colors
-		hasColorModule
-		? pLogContent[ colorCodeByLevels[pLogLevel]  ]
+		// Enabled by a number value which is higher than the log level
+		||
+		(typeof verbose === 'number' && pLogLevel > verbose)
+	)
+	&&
+	console.log(
 
-		// Without colors
-		: pLogContent
+		// Add a tab for log level of 1
+		(pLogLevel > 0 ? `	` : ``)
+		+
+		(
+			// If we have color module, show with colors
+			hasColorModule
+			? pLogContent[ colorCodeByLevels[pLogLevel]  ]
+
+			// Without colors
+			: pLogContent
+		)
 	);
 }
 
@@ -104,7 +124,10 @@ class Files
 	}
 
 	/**
-	 * Enable or disable console log
+	 * Enable or disable console log.
+	 * - If value is a boolean, will enable logs on true.
+	 * - If value is a number, will enable log which have higher log leval than value.
+	 * - If value is a function, will call at each log with log content and log level as arguments.
 	 */
 	static setVerbose ( pVerbose )
 	{
@@ -196,7 +219,7 @@ class Files
 		{
 			// Remove
 			fse.removeSync( file );
-			colorLog(`	Deleted ${file}`, 1);
+			colorLog(`Deleted ${file}`, 1);
 		});
 
 		// Return total deleted files and remove targeted files list
@@ -272,7 +295,7 @@ class Files
 
 			// Move
 			fse.moveSync( file, destination );
-			colorLog(`	${file} moved to ${destination}`, 1);
+			colorLog(`${file} moved to ${destination}`, 1);
 
 			// Add moved file to new files list
 			newFiles.push( destination );
@@ -304,7 +327,7 @@ class Files
 
 			// Copy
 			fse.copySync( file, destination );
-			colorLog(`	${file} copied to ${destination}`, 1);
+			colorLog(`${file} copied to ${destination}`, 1);
 		});
 
 		// Return total copied files and do not alter files.

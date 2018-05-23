@@ -25,10 +25,13 @@ declare module '@zouloux/files'
 		static new (pPath):Files
 
 		/**
-		 * Enable or disable console log
+		 * Enable or disable console log.
+		 * - If value is a boolean, will enable logs on true.
+		 * - If value is a number, will enable log which have higher log leval than value.
+		 * - If value is a function, will call at each log with log content and log level as arguments.
 		 */
-		static setVerbose (value:boolean):void
-		static getVerbose ():boolean
+		static setVerbose (value:boolean|number|(pLogContent, pLogLevel) => void):void
+		static getVerbose ():boolean|number|(pLogContent, pLogLevel) => void
 
 
 		// ------------------------------------------------------------------------- PROPERTIES
