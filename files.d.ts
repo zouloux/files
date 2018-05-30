@@ -227,5 +227,19 @@ declare module '@zouloux/files'
 		 * Only works when targetting one file, otherwise will return null.
 		 */
 		getSize ():number|null
+
+
+		// ------------------------------------------------------------------------- HASH
+
+		/**
+		 * Generate hash from current files list.
+		 * Will generate another hash if there is other files.
+		 * Can generate also a different hash from file last modified or file size.
+		 * File list modified is often enough to detect changes in file system.
+		 * @param pLastModified Add file last modified date for each file into hash signature. Hash will change if any file last modified date changes.
+		 * @param pSize Add file size for each file into hash signature. Hash will change if any file size changes.
+		 * @return {string} Hex Sga256 Hash from file list and stats.
+		 */
+		generateFileListHash (pLastModified = false, pSize = false)
 	}
 }

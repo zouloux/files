@@ -529,6 +529,47 @@ class Files
 			: fileStats.size
 		);
 	}
+
+
+	// ------------------------------------------------------------------------- HASH
+
+	/**
+	 * Generate hash from current files list.
+	 * Will generate another hash if there is other files.
+	 * Can generate also a different hash from file last modified or file size.
+	 * File list modified is often enough to detect changes in file system.
+	 * @param pLastModified Add file last modified date for each file into hash signature. Hash will change if any file last modified date changes.
+	 * @param pSize Add file size for each file into hash signature. Hash will change if any file size changes.
+	 * @return {string} Hex Sga256 Hash from file list and stats.
+	 */
+	generateFileListHash (pLastModified = false, pSize = false)
+	{
+		// Browse all files
+		const allFilesHashSignature = this.all( filePath =>
+		{
+			// Get this file quickly
+			const file = Files.getFiles( filePath );
+
+			// Create a hash for this file and add it to the global hash
+			return (
+				// Add file path so if a file is added and all options are set to false
+				// global hash still changes.
+				filePath
+				+ '&'
+				// Add last modified timestamp to hash if asked
+				+ (pLastModified ? file.getLastModified() : '')
+				+ '-'
+				// Add file size to hash if asked
+				+ (pSize ? file.getSize() : '')
+			)
+		});
+
+		// Convert all file hashs signature to a big hash
+		const crypto = require('crypto');
+		const hash = crypto.createHash('sha256');
+		hash.update( allFilesHashSignature.join('_') );
+		return hash.digest('hex');
+	}
 }
 
 /**
