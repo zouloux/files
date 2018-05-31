@@ -30,8 +30,8 @@ declare module '@zouloux/files'
 		 * - If value is a number, will enable log which have higher log leval than value.
 		 * - If value is a function, will call at each log with log content and log level as arguments.
 		 */
-		static setVerbose (value:boolean|number|(pLogContent, pLogLevel) => void):void
-		static getVerbose ():boolean|number|(pLogContent, pLogLevel) => void
+		static setVerbose (value:boolean|number|((pLogContent, pLogLevel) => void)):void
+		static getVerbose ():boolean|number|((pLogContent, pLogLevel) => void)
 
 
 		// ------------------------------------------------------------------------- PROPERTIES
@@ -240,6 +240,6 @@ declare module '@zouloux/files'
 		 * @param pSize Add file size for each file into hash signature. Hash will change if any file size changes.
 		 * @return {string} Hex Sga256 Hash from file list and stats.
 		 */
-		generateFileListHash (pLastModified = false, pSize = false)
+		generateFileListHash (pLastModified, pSize)
 	}
 }
