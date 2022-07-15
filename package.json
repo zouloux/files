@@ -1,33 +1,61 @@
 {
   "name": "@zouloux/files",
-  "version": "0.6.0",
-  "description": "Files is a NodeJS file management helper with a deadly simple API, with the power of glob and fs-extra.",
-  "main": "files.js",
-  "types" : "files.d.ts",
+  "version": "3.0.0-beta",
+  "description": "",
+  "main": "./dist/index.es2017.cjs",
+  "module": "./dist/index.es2020.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "reset": "rm -rf node_modules && npm i",
+    "clean": "rm -rf dist",
+    "build": "tsbundle build",
+    "publish": "tsbundle publish"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zouloux/files.git"
   },
-  "homepage": "https://github.com/zouloux/files",
+  "dependencies": {
+    "@solid-js/core": "^0.4.3",
+    "@solid-js/nanostache": "^1.0.6",
+    "get-folder-size": "^3.1.0",
+    "glob": "^7.1.7",
+    "mkdirp": "^1.0.4",
+    "ncp": "^2.0.0",
+    "rimraf": "^3.0.2"
+  },
+  "optionalDependencies": {
+    "json5": "^2.2.0",
+    "yawn-yaml": "^1.5.0"
+  },
+  "keywords": [
+    "solid",
+    "files",
+    "simple",
+    "directory",
+    "directories",
+    "json",
+    "yaml",
+    "management",
+    "easy"
+  ],
+  "author": "Alexis Bouhet - ZoulouX",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/zouloux/files/issues"
   },
-  "keywords": [
-    "files",
-    "glob",
-    "fs",
-    "fs-extra",
-    "simple",
-    "api",
-    "helper"
-  ],
-  "dependencies": {
-    "glob": "^7.1.1",
-    "fs-extra": "^2.0.0"
+  "homepage": "https://github.com/zouloux/files#readme",
+  "devDependencies": {
+    "@types/node": "^18.0.3",
+    "@zouloux/tsbundle": "^1.2.17"
   },
-  "author": "Alexis Bouhet",
-  "license": "MIT"
+  "tsbundle": {
+    "files": [
+      {
+        "input": "./src/index.ts",
+        "output": "./dist/",
+        "formats" : ["es2020.mjs", "es2017.cjs"]
+      }
+    ]
+  }
 }
