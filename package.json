@@ -1,6 +1,6 @@
 {
   "name": "@zouloux/files",
-  "version": "3.0.0-beta",
+  "version": "3.0.0",
   "description": "",
   "main": "./dist/index.es2017.cjs",
   "module": "./dist/index.es2020.mjs",
@@ -16,8 +16,8 @@
     "url": "git+https://github.com/zouloux/files.git"
   },
   "dependencies": {
-    "@solid-js/core": "^0.4.3",
-    "@solid-js/nanostache": "^1.0.6",
+    "@zouloux/ecma-core": "^0.1.1",
+    "stach": "^1.0.1",
     "get-folder-size": "^3.1.0",
     "glob": "^7.1.7",
     "mkdirp": "^1.0.4",
@@ -47,14 +47,17 @@
   "homepage": "https://github.com/zouloux/files#readme",
   "devDependencies": {
     "@types/node": "^18.0.3",
-    "@zouloux/tsbundle": "^1.2.17"
+    "@zouloux/tsbundle": "^1.2.20"
   },
   "tsbundle": {
     "files": [
       {
         "input": "./src/index.ts",
         "output": "./dist/",
-        "formats" : ["es2020.mjs", "es2017.cjs"]
+        "formats": [
+          "es2020.mjs",
+          "es2017.cjs"
+        ]
       }
     ]
   }
