@@ -2,7 +2,7 @@ import { FileEntity } from './FileEntity'
 import * as fs from "fs";
 import { TContentArgument, TGlobOptionsArgument, TRawWritableContent } from "./Struct";
 import { FileFinder } from "./FileFinder";
-import { ScalarObject, ScalarValue, TFunctionalFilter } from "@solid-js/core";
+import { ScalarObject, ScalarValue, TFunctionalFilter } from "@zouloux/ecma-core";
 import { DotEnvParser, JSON5Parser, JSONParser, YAMLParser } from "./FileParsers";
 import { resolveHome } from "./index";
 
@@ -344,7 +344,7 @@ export class File extends FileEntity
 	template ( values:object|ScalarObject )
 	{
 		this.initEmptyData()
-        this._data = require('@solid-js/nanostache').Nanostache( this._data, values );
+        this._data = require('stach').Stach( this._data, values );
         return this;
 	}
 

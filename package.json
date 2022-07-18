@@ -1,6 +1,6 @@
 {
   "name": "@zouloux/files",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "",
   "main": "./dist/index.es2017.cjs",
   "module": "./dist/index.es2020.mjs",
@@ -47,7 +47,7 @@
   "homepage": "https://github.com/zouloux/files#readme",
   "devDependencies": {
     "@types/node": "^18.0.3",
-    "@zouloux/tsbundle": "^1.2.20"
+    "@zouloux/tsbundle": "^1.2.21"
   },
   "tsbundle": {
     "files": [

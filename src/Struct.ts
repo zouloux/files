@@ -1,4 +1,4 @@
-import { ScalarValue, TFunctionalFilter } from "@solid-js/core";
+import { ScalarValue, TFunctionalFilter } from "@zouloux/ecma-core";
 
 
 export type TFileType = 'file'|'directory'|'all';

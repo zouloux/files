@@ -1,4 +1,4 @@
-import { ScalarObject } from "@solid-js/core";
+import { ScalarObject } from "@zouloux/ecma-core";
 
 // ----------------------------------------------------------------------------- STRUCT
 
