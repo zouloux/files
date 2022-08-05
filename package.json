@@ -1,6 +1,6 @@
 {
   "name": "@zouloux/files",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "",
   "main": "./dist/index.es2017.cjs",
   "module": "./dist/index.es2020.mjs",
@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "@zouloux/ecma-core": "^0.1.1",
-    "stach": "^1.0.1",
     "get-folder-size": "^3.1.0",
     "glob": "^7.1.7",
     "mkdirp": "^1.0.4",
@@ -26,7 +25,8 @@
   },
   "optionalDependencies": {
     "json5": "^2.2.0",
-    "yawn-yaml": "^1.5.0"
+    "yawn-yaml": "^1.5.0",
+    "stach": "^2.0.1"
   },
   "keywords": [
     "solid",
