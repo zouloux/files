@@ -69,7 +69,7 @@ export function DotEnvParser () {
 					data[ line ] = ""
 					return;
 				}
-				
+
 				// Split key and value
 				const parts = line.split("=");
 
@@ -103,7 +103,10 @@ export function DotEnvParser () {
 			let buffer = '';
 			Object.keys( data ).map( key => {
 				const value = data[ key ];
-				buffer += key + '=' + value + "\n";
+				if ( key.indexOf("#") === 0 )
+					buffer += key + "\n"
+				else
+					buffer += key + '=' + value + "\n";
 			})
 			return buffer;
 		}

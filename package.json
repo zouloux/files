@@ -1,6 +1,6 @@
 {
   "name": "@zouloux/files",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "",
   "main": "./dist/index.es2017.cjs",
   "module": "./dist/index.es2020.mjs",
