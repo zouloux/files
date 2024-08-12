@@ -63,21 +63,22 @@ export function DotEnvParser () {
 		decode ( buffer:string ) {
 			const data:ScalarObject = {};
 			buffer.split("\n").map( line => {
-				// Remove comments
-				if ( line.trim().indexOf('#') === 0 )
+				line = line.trim()
+				// Keep comments
+				if ( line.indexOf('#') === 0 ) {
+					data[ line ] = ""
 					return;
-
-				// TODO : Remove comments in values only :
-				// TODO : KEY=value # This is a comment
-
+				}
+				
 				// Split key and value
 				const parts = line.split("=");
 
-				// Continue only if their is an assignment
-				if ( parts.length < 2 ) return;
+				// Continue only if there is an assignment
+				if ( parts.length < 2 )
+					return;
 
 				// Extract key and value, we join to allow "=" on values
-				let key = parts.shift().trim()
+				const key = parts.shift().trim()
 				let value = parts.join('=').trim()
 
 				// Remove quotes on value
